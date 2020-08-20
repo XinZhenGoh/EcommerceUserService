@@ -29,12 +29,12 @@ public class S3Util {
 			.build();
 	}
 
-	public static String uploadImage(File f, String uniqueFileName) {
-		PutObjectResult result=s3Client.putObject("bucket-demo-12345", uniqueFileName ,f);
-		URL url= s3Client.getUrl("bucket-demo-12345", uniqueFileName);
-		System.out.println(url.toExternalForm());
-		return url.toExternalForm();
-	}
+//	public static String uploadImage(File f, String uniqueFileName) {
+//		PutObjectResult result=s3Client.putObject("bucket-demo-12345", uniqueFileName ,f);
+//		URL url= s3Client.getUrl("bucket-demo-12345", uniqueFileName);
+//		System.out.println(url.toExternalForm());
+//		return url.toExternalForm();
+//	}
 
 	public static String uploadImageWithMultipart(MultipartFile f, String uniqueFileName) throws IOException {
 		File file = new File("targetFile.tmp");
