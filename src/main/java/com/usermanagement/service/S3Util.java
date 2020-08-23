@@ -25,7 +25,8 @@ public class S3Util {
 
 	static {   s3Client = AmazonS3ClientBuilder.standard()
 			.withRegion("us-east-1")
-			.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("AKIAUJ2OJLRCH3Y72U4E","lZzNvou2iXfYmmpAkBKhrphgEf84KllyX23uTaf9")))
+			.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("AKIAVU2RRFDJ5JLC3V6A","\n" +
+					"ajX7wE2+TIND8RfHoJ6N8UdHFT/d3R1UcGsPN13v")))
 			.build();
 	}
 
@@ -38,16 +39,13 @@ public class S3Util {
 
 	public static String uploadImageWithMultipart(MultipartFile f, String uniqueFileName) throws IOException {
 		File file = new File("targetFile.tmp");
-//		System.out.println(f.getOriginalFilename());
-//		f.transferTo(file);
 
 		try (OutputStream os = new FileOutputStream(file)) {
 			os.write(f.getBytes());
 		}
 
-		PutObjectResult result=s3Client.putObject("bucket-demo-12345", uniqueFileName ,file);
-//		System.out.println(result);
-		URL url= s3Client.getUrl("bucket-demo-12345", uniqueFileName);
+		s3Client.putObject("ecommerceimagestore", uniqueFileName ,file);
+		URL url= s3Client.getUrl("ecommerceimagestore", uniqueFileName);
 		return url.toExternalForm();
 	}
 

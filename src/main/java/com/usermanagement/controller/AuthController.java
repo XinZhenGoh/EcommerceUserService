@@ -13,7 +13,6 @@ import com.usermanagement.payload.response.MessageResponse;
 import com.usermanagement.service.S3Util;
 import com.usermanagement.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,6 +53,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+        //try removing it and see
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -72,7 +72,9 @@ public class AuthController {
                 roles));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
+
+//    @CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/upload")
 	public ResponseEntity addImage(@RequestParam("imageFile") MultipartFile file,
 								   @RequestParam String username
@@ -81,7 +83,7 @@ public class AuthController {
 //		User u  = new User(username,path);
 //		userService.addUser(u);
             System.out.println(path);
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.ok("Image uploaded");
 	}
 
     @PostMapping("/signup")
