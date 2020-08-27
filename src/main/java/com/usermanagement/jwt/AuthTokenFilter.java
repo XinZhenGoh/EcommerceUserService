@@ -4,6 +4,7 @@ import com.usermanagement.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,8 +40,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+                System.out.println(username);
+                System.out.println(userDetails.getAuthorities());
+
+                //set authentication extracted from security context
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+        } catch (BadCredentialsException e) {
+            logger.error(e.getMessage(), e);
+
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
         }
@@ -55,6 +63,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             return headerAuth.substring(7, headerAuth.length());
         }
 
-        return null;
+        else {
+            throw new BadCredentialsException("Cannot parse JWT");
+        }
     }
 }

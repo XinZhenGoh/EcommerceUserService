@@ -10,7 +10,6 @@ import com.usermanagement.payload.request.LoginRequest;
 import com.usermanagement.payload.request.SignupRequest;
 import com.usermanagement.payload.response.JwtResponse;
 import com.usermanagement.payload.response.MessageResponse;
-import com.usermanagement.service.S3Util;
 import com.usermanagement.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-
-
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,17 +69,6 @@ public class AuthController {
 
 
 
-//    @CrossOrigin(origins = "http://localhost:4200")
-	@PostMapping("/upload")
-	public ResponseEntity addImage(@RequestParam("imageFile") MultipartFile file,
-								   @RequestParam String username
-	) throws IOException {
-		String path = S3Util.uploadImageWithMultipart(file, file.getOriginalFilename());
-//		User u  = new User(username,path);
-//		userService.addUser(u);
-            System.out.println(path);
-		return ResponseEntity.ok("Image uploaded");
-	}
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
@@ -138,5 +122,11 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PutMapping("/updateProfile/{username}")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user, @PathVariable String username) {
+        //TODO
+        return ResponseEntity.ok(new MessageResponse("unimplemented update method"));
     }
 }

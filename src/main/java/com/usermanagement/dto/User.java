@@ -1,18 +1,14 @@
 package com.usermanagement.dto;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -34,12 +30,11 @@ public class User {
     //    @Column(unique = true)
     String username;
     String email;
+//    String imageUrl;
 
     @NotBlank
-            @Size(max=120)
+    @Size(max=120)
     String password;
-
-//    String profilePicturePath;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
